@@ -1,6 +1,6 @@
+import { exchange } from "./bank";
 import { createMoney, type Currency, type Money } from "./money";
 
-const EUR2USD = 1.2;
 
 export type Portfolio = {
   add: (moneys: Money[]) => void;
@@ -10,14 +10,14 @@ export type Portfolio = {
 export function createPortfolio(): Portfolio {
   const listMoney: Money[] = [];
 
-  const convert = (money: Money, to: Currency) => {
-    return money.currency === to ? money.amount : EUR2USD * money.amount;
-  };
+  const convert = (money: Money, to: Currency) =>
+    exchange[to][money.currency] * money.amount;
+
   return {
-    add: (moneys: Money[]) => {
+    add: (moneys) => {
       listMoney.push(...moneys);
     },
-    evaluate: (currency: Currency) =>
+    evaluate: (currency) =>
       createMoney(
         listMoney.reduce((acc, money) => convert(money, currency) + acc, 0),
         currency

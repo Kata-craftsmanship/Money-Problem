@@ -15,8 +15,8 @@ export function createMoney(amount: number, currency: Currency): Money {
     amount: amount,
     currency: currency,
     times: times,
-    divide: (divider: number) => times(1 / divider),
-    toEqual: (money: Money) =>
+    divide: (divider) => times(1 / divider),
+    toEqual: (money) =>
       money.amount === amount && money.currency === currency,
   };
 }
